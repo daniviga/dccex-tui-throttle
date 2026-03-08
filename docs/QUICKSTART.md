@@ -3,11 +3,11 @@
 ## Installation
 
 ```bash
-# From the django-ram/ram directory
-cd ram
+# From the dccex-tui-throttle directory
+cd dccex-tui-throttle
 
 # Install dependencies
-pip install -r requirements-throttle.txt
+pip install -r requirements.txt
 
 # Verify installation
 python -m dccex_throttle --version
@@ -81,7 +81,7 @@ speed_step = 1          # Speed increment per key press
 
 - See full documentation in `README.md`
 - DCC-EX documentation: https://dcc-ex.com
-- Report issues at: https://github.com/daniviga/django-ram
+- Report issues on the project's issue tracker
 
 ## Example Session
 

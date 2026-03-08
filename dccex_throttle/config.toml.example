@@ -14,7 +14,6 @@ timeout = 10
 theme = "dark"
 show_debug_console = true
 max_log_lines = 100
-show_extended_functions = false
 
 [throttle]
 # Throttle control settings

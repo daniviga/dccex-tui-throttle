@@ -8,21 +8,21 @@ A fully functional Python TUI (Terminal User Interface) application for controll
 
 ### Project Structure
 ```
-ram/
+dccex-tui-throttle/
 ├── dccex_throttle/              # Main package
 │   ├── __init__.py              # Package initialization (24 lines)
 │   ├── __main__.py              # Entry point with CLI args (107 lines)
-│   ├── config.py                # TOML configuration (142 lines)
+│   ├── config.py                # TOML configuration (139 lines)
 │   ├── models.py                # Data models (117 lines)
-│   ├── protocol.py              # DCC-EX TCP protocol (228 lines)
-│   ├── ui.py                    # Textual UI application (748 lines)
+│   ├── protocol.py              # DCC-EX TCP protocol (314 lines)
+│   ├── ui.py                    # Textual UI application (757 lines)
 │   ├── utils.py                 # Utilities (128 lines)
 │   ├── config.toml.example      # Example configuration
 │   ├── README.md                # Full documentation
 │   └── QUICKSTART.md            # Quick start guide
-└── requirements-throttle.txt    # Dependencies
+└── requirements.txt             # Dependencies
 
-Total: ~1,395 lines of Python code + documentation
+Total: ~1,586 lines of Python code + documentation
 ```
 
 ## 🎯 Features Implemented
@@ -32,8 +32,8 @@ Total: ~1,395 lines of Python code + documentation
 - **Speed Control**: 0-126 with configurable steps (keyboard + buttons)
 - **Direction Control**: Forward/Reverse with instant toggle + visual feedback ✨
 - **Function Control**: All 32 functions (F0-F31)
-  - F0-F11 always visible
-  - F12-F31 toggleable view
+  - F0-F11 always visible in first row
+  - F12-F31 always visible below
 - **Track Power**: On/Off toggle with visual feedback
 - **Emergency Stop**: Instant stop all locomotives
 - **Normal Stop**: Stop current locomotive
@@ -101,8 +101,8 @@ Total: ~1,395 lines of Python code + documentation
 
 ### Installation
 ```bash
-cd ram
-pip install -r requirements-throttle.txt
+cd dccex-tui-throttle
+pip install -r requirements.txt
 ```
 
 ### Run
@@ -142,8 +142,8 @@ python -m dccex_throttle --debug --log-file throttle.log
 
 ## 📊 Code Statistics
 
-- **Total Lines**: ~1,688 (including docs)
-- **Python Code**: ~1,395 lines
+- **Total Lines**: ~1,879 (including docs)
+- **Python Code**: ~1,586 lines
 - **Files**: 10 files
 - **Modules**: 6 core modules
 - **Functions/Methods**: 50+
@@ -204,15 +204,14 @@ Three levels of documentation provided:
 2. **README.md**: Complete reference (293 lines)
 3. **Inline docstrings**: All classes and functions documented
 
-## 🔗 Integration with Django-RAM
+## 🔗 Integration Notes
 
-This throttle integrates seamlessly with the Django-RAM project:
+This throttle can be used standalone or integrated with other projects:
 
-- Located in `ram/dccex_throttle/` alongside Django apps
-- Shares similar code style (PEP 8, 79-char lines)
-- Could be extended to read locomotive data from Django DB
-- Separate requirements file for isolation
-- Compatible with Django 6.0+ Python version requirements
+- Standalone application with its own requirements
+- Follows PEP 8 style guide (79-char lines)
+- Could be extended to integrate with locomotive databases
+- Compatible with Python 3.9+ (uses tomli for older versions)
 
 ## ✅ All Requirements Met
 
@@ -233,6 +232,6 @@ The DCC-EX Throttle TUI is complete and ready for use. Install dependencies, con
 
 **Version**: 1.0.0  
 **Status**: ✅ Production Ready  
-**Lines of Code**: 1,395  
+**Lines of Code**: 1,586  
 **Documentation**: Complete  
 **License**: GPLv3

@@ -1,5 +1,5 @@
 # DCC-EX Throttle TUI Dependencies
-# Install with: pip install -r requirements-throttle.txt
+# Install with: pip install -r requirements.txt
 
 textual>=0.47.0       # Modern TUI framework
 tomli>=2.0.1          # TOML parsing for Python <3.11

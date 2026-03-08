@@ -32,7 +32,6 @@ DEFAULT_CONFIG = {
         'theme': 'dark',
         'show_debug_console': True,
         'max_log_lines': 100,
-        'show_extended_functions': False,
     },
     'throttle': {
         'default_loco_address': 3,

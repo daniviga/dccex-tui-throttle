@@ -8,9 +8,9 @@ A modern Python Terminal User Interface (TUI) application for controlling model 
 - **Locomotive Management**: Simple address-based acquisition and release
 - **Speed Control**: Adjustable speed (0-126) with keyboard shortcuts and buttons
 - **Direction Control**: Forward/Reverse with quick toggle and visual feedback
-- **Function Control**: All 32 functions (F0-F31) with split view and visual feedback
-  - F0-F11 always visible
-  - F12-F31 available via toggle
+- **Function Control**: All 32 functions (F0-F31) with visual feedback
+  - F0-F11 always visible in first row
+  - F12-F31 always visible below
 - **Track Power**: Easy on/off toggle with visual feedback
 - **Emergency Stop**: Instant stop for all locomotives
 - **Direct Commands**: Send raw DCC-EX commands for advanced control
@@ -37,26 +37,16 @@ A modern Python Terminal User Interface (TUI) application for controlling model 
 
 ## Installation
 
-### From the Django-RAM project
-
-```bash
-# Navigate to the ram directory
-cd ram
-
-# Install dependencies
-pip install -r requirements-throttle.txt
-
-# Run the throttle
-python -m dccex_throttle
-```
-
-### Standalone Installation
+### Installation
 
 ```bash
 # Install dependencies
+pip install -r requirements.txt
+
+# Or install manually
 pip install textual tomli  # tomli only needed for Python <3.11
 
-# Run from the dccex_throttle directory
+# Run the application
 python -m dccex_throttle
 ```
 
@@ -104,7 +94,6 @@ timeout = 10
 theme = "dark"
 show_debug_console = true
 max_log_lines = 100
-show_extended_functions = false
 
 [throttle]
 default_loco_address = 3
@@ -287,21 +276,6 @@ dccex_throttle/
 
 ## Development
 
-### Project Structure in Django-RAM
-
-This throttle is part of the Django Railroad Assets Manager project:
-
-```
-django-ram/
-├── ram/                    # Django project
-│   ├── dccex_throttle/    # This throttle application
-│   ├── roster/            # Rolling stock management
-│   ├── metadata/          # Manufacturers, scales, etc.
-│   └── ...
-└── arduino/
-    └── WebThrottle-EX/    # Reference web throttle
-```
-
 ### Running Tests
 
 ```bash
@@ -311,7 +285,7 @@ django-ram/
 
 ### Contributing
 
-Contributions are welcome! Please follow the Django-RAM project guidelines:
+Contributions are welcome! Please follow these guidelines:
 - Follow PEP 8 style guide (79 character line length)
 - Use type hints where appropriate
 - Add docstrings to functions and classes
