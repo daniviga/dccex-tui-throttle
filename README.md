@@ -2,6 +2,9 @@
 
 A modern Python Terminal User Interface (TUI) application for controlling model trains through a DCC-EX Command Station. Built with [Textual](https://textual.textualize.io/), this throttle provides a feature-rich interface for locomotive control over TCP socket connection.
 
+<img width="1920" height="1026" alt="image" src="https://github.com/user-attachments/assets/d80146fe-9001-4665-9831-d044f1357b85" />
+
+
 ## Features
 
 ### Core Throttle Controls
