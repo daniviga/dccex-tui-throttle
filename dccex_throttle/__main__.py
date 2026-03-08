@@ -1,6 +1,7 @@
 """
 DCC-EX Throttle TUI - Entry point
 """
+
 import argparse
 import sys
 from pathlib import Path
@@ -13,7 +14,7 @@ from .utils import setup_logging
 def parse_arguments():
     """Parse command-line arguments."""
     parser = argparse.ArgumentParser(
-        description='DCC-EX Throttle TUI - Control your model trains',
+        description="DCC-EX Throttle TUI - Control your model trains",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -28,43 +29,29 @@ Examples:
 
   # Enable debug logging
   python -m dccex_throttle --debug
-        """
+        """,
     )
 
     parser.add_argument(
-        '--host',
-        type=str,
-        help='DCC-EX Command Station host address'
+        "--host", type=str, help="DCC-EX Command Station host address"
     )
 
     parser.add_argument(
-        '--port',
-        type=int,
-        help='DCC-EX Command Station port (default: 2560)'
+        "--port", type=int, help="DCC-EX Command Station port (default: 2560)"
     )
 
     parser.add_argument(
-        '--config',
-        type=str,
-        help='Path to configuration file'
+        "--config", type=str, help="Path to configuration file"
     )
 
     parser.add_argument(
-        '--debug',
-        action='store_true',
-        help='Enable debug logging'
+        "--debug", action="store_true", help="Enable debug logging"
     )
 
-    parser.add_argument(
-        '--log-file',
-        type=str,
-        help='Log file path'
-    )
+    parser.add_argument("--log-file", type=str, help="Log file path")
 
     parser.add_argument(
-        '--version',
-        action='version',
-        version='DCC-EX Throttle TUI v1.0.0'
+        "--version", action="version", version="DCC-EX Throttle TUI v1.0.0"
     )
 
     return parser.parse_args()
@@ -77,6 +64,7 @@ def main():
 
     # Setup logging
     import logging
+
     log_level = logging.DEBUG if args.debug else logging.INFO
     if args.log_file:
         setup_logging(args.log_file, log_level)
@@ -103,5 +91,5 @@ def main():
         sys.exit(1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

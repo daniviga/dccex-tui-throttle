@@ -1,6 +1,7 @@
 """
 DCC-EX Protocol implementation for TCP socket communication.
 """
+
 import asyncio
 import logging
 from typing import Optional, Callable, Awaitable, Dict, Any
@@ -21,7 +22,9 @@ class DCCEXProtocol:
         timeout: int = 10,
         on_response: Optional[Callable[[str], Awaitable[None]]] = None,
         on_disconnect: Optional[Callable[[], Awaitable[None]]] = None,
-        on_broadcast: Optional[Callable[[str, Dict[str, Any]], Awaitable[None]]] = None
+        on_broadcast: Optional[
+            Callable[[str, Dict[str, Any]], Awaitable[None]]
+        ] = None,
     ):
         """
         Initialize DCC-EX protocol handler.
@@ -58,7 +61,7 @@ class DCCEXProtocol:
         try:
             self.reader, self.writer = await asyncio.wait_for(
                 asyncio.open_connection(self.host, self.port),
-                timeout=self.timeout
+                timeout=self.timeout,
             )
             self.connected = True
             logger.info(f"Connected to {self.host}:{self.port}")
@@ -111,11 +114,11 @@ class DCCEXProtocol:
                     break
 
                 # Decode and process data
-                self._buffer += data.decode('utf-8', errors='ignore')
+                self._buffer += data.decode("utf-8", errors="ignore")
 
                 # Process complete messages (ending with \n or \r\n)
-                while '\n' in self._buffer:
-                    line, self._buffer = self._buffer.split('\n', 1)
+                while "\n" in self._buffer:
+                    line, self._buffer = self._buffer.split("\n", 1)
                     line = line.strip()
 
                     if line:
@@ -177,7 +180,7 @@ class DCCEXProtocol:
                         "speed": speed,
                         "direction": direction,
                         "speedbyte": speedbyte,
-                        "functions": functions
+                        "functions": functions,
                     }
 
                     await self.on_broadcast("loco_state", broadcast_data)
@@ -189,18 +192,14 @@ class DCCEXProtocol:
                 # Power state broadcast: <p0> or <p1>
                 try:
                     power_state = int(params[0])
-                    broadcast_data = {
-                        "power": power_state == 1
-                    }
+                    broadcast_data = {"power": power_state == 1}
                     await self.on_broadcast("power_state", broadcast_data)
                 except (ValueError, IndexError) as e:
                     logger.warning(f"Error parsing power state: {e}")
 
             elif cmd_type.startswith("iDCC") or cmd_type == "i":
                 # Command station info
-                broadcast_data = {
-                    "info": response
-                }
+                broadcast_data = {"info": response}
                 await self.on_broadcast("cs_info", broadcast_data)
 
             elif cmd_type == "H" and len(params) >= 2:
@@ -210,7 +209,7 @@ class DCCEXProtocol:
                     turnout_state = int(params[1])
                     broadcast_data = {
                         "turnout_id": turnout_id,
-                        "state": turnout_state
+                        "state": turnout_state,
                     }
                     await self.on_broadcast("turnout_state", broadcast_data)
                 except (ValueError, IndexError) as e:
@@ -233,7 +232,7 @@ class DCCEXProtocol:
         try:
             # Format command with brackets and newline
             formatted = f"<{command}>\n"
-            self.writer.write(formatted.encode('utf-8'))
+            self.writer.write(formatted.encode("utf-8"))
             await self.writer.drain()
             logger.debug(f"Sent: <{command}>")
             return True
@@ -306,9 +305,9 @@ class DCCEXProtocol:
         """
         # Remove brackets if present
         command = command.strip()
-        if command.startswith('<'):
+        if command.startswith("<"):
             command = command[1:]
-        if command.endswith('>'):
+        if command.endswith(">"):
             command = command[:-1]
 
         return await self.send_command(command)

@@ -1,6 +1,7 @@
 """
 Data models for DCC-EX Throttle TUI application.
 """
+
 from dataclasses import dataclass, field
 from typing import Dict, Optional
 from enum import IntEnum
@@ -8,6 +9,7 @@ from enum import IntEnum
 
 class Direction(IntEnum):
     """Locomotive direction constants."""
+
     REVERSE = 0
     FORWARD = 1
 
@@ -15,6 +17,7 @@ class Direction(IntEnum):
 @dataclass
 class Locomotive:
     """Represents a locomotive and its current state."""
+
     address: int
     name: str = ""
     speed: int = 0
@@ -69,6 +72,7 @@ class Locomotive:
 @dataclass
 class ThrottleState:
     """Global throttle state."""
+
     connected: bool = False
     track_power: bool = False
     current_loco: Optional[Locomotive] = None
@@ -106,6 +110,7 @@ class ThrottleState:
 @dataclass
 class CommandLogEntry:
     """Represents a command log entry."""
+
     direction: str  # 'S' for sent, 'R' for received
     command: str
     timestamp: Optional[str] = None

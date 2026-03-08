@@ -1,11 +1,24 @@
 """
 Textual UI for DCC-EX Throttle TUI application.
 """
+
 import time
 from textual.app import App, ComposeResult
-from textual.containers import Container, Horizontal, Vertical, ScrollableContainer
+from textual.containers import (
+    Container,
+    Horizontal,
+    Vertical,
+    ScrollableContainer,
+)
 from textual.widgets import (
-    Header, Footer, Button, Input, Static, Label, Switch, RichLog
+    Header,
+    Footer,
+    Button,
+    Input,
+    Static,
+    Label,
+    Switch,
+    RichLog,
 )
 from textual.binding import Binding
 from textual.reactive import reactive
@@ -137,12 +150,12 @@ class DCCEXThrottleApp(App):
 
         # Get config values
         conn_config = config.get_connection_config()
-        self.state.host = conn_config.get('host', 'localhost')
-        self.state.port = conn_config.get('port', 2560)
+        self.state.host = conn_config.get("host", "localhost")
+        self.state.port = conn_config.get("port", 2560)
 
         self.throttle_config = config.get_throttle_config()
-        self.speed_step = self.throttle_config.get('speed_step', 1)
-        self.max_speed = self.throttle_config.get('max_speed', 126)
+        self.speed_step = self.throttle_config.get("speed_step", 1)
+        self.max_speed = self.throttle_config.get("max_speed", 126)
 
     def compose(self) -> ComposeResult:
         """Compose the UI layout."""
@@ -152,14 +165,20 @@ class DCCEXThrottleApp(App):
             # Connection panel
             with Container(id="connection-panel"):
                 with Horizontal():
-                    yield Static("Loco Address: N/A", id="loco-address-display")
+                    yield Static(
+                        "Loco Address: N/A", id="loco-address-display"
+                    )
                     yield Input(
                         placeholder="Enter loco address",
                         id="loco-input",
-                        type="integer"
+                        type="integer",
                     )
-                    yield Button("Acquire", id="acquire-btn", variant="primary")
-                    yield Button("Release", id="release-btn", variant="default")
+                    yield Button(
+                        "Acquire", id="acquire-btn", variant="primary"
+                    )
+                    yield Button(
+                        "Release", id="release-btn", variant="default"
+                    )
                     yield Static("Power: OFF", id="power-status")
                     yield Switch(value=False, id="power-switch")
 
@@ -168,19 +187,44 @@ class DCCEXThrottleApp(App):
                 # Throttle panel (left)
                 with ScrollableContainer(id="throttle-panel"):
                     yield Static(
-                        "Speed: 0\nDirection: FWD",
-                        id="speed-display"
+                        "Speed: 0\nDirection: FWD", id="speed-display"
                     )
                     # Speed and direction controls in two columns
                     with Horizontal():
                         with Vertical():
-                            yield Button("▲ Faster", id="speed-up-btn", classes="control-button")
-                            yield Button("▶ Forward", id="dir-forward-btn", classes="control-button")
-                            yield Button("STOP", id="stop-btn", variant="warning", classes="control-button")
+                            yield Button(
+                                "▲ Faster",
+                                id="speed-up-btn",
+                                classes="control-button",
+                            )
+                            yield Button(
+                                "▶ Forward",
+                                id="dir-forward-btn",
+                                classes="control-button",
+                            )
+                            yield Button(
+                                "STOP",
+                                id="stop-btn",
+                                variant="warning",
+                                classes="control-button",
+                            )
                         with Vertical():
-                            yield Button("▼ Slower", id="speed-down-btn", classes="control-button")
-                            yield Button("◀ Reverse", id="dir-reverse-btn", classes="control-button")
-                            yield Button("E-STOP", id="estop-btn", variant="error", classes="control-button")
+                            yield Button(
+                                "▼ Slower",
+                                id="speed-down-btn",
+                                classes="control-button",
+                            )
+                            yield Button(
+                                "◀ Reverse",
+                                id="dir-reverse-btn",
+                                classes="control-button",
+                            )
+                            yield Button(
+                                "E-STOP",
+                                id="estop-btn",
+                                variant="error",
+                                classes="control-button",
+                            )
 
                 # Function panel (right)
                 with ScrollableContainer(id="function-panel"):
@@ -188,53 +232,117 @@ class DCCEXThrottleApp(App):
 
                     # Function buttons F0-F11
                     with Horizontal(classes="function-row"):
-                        yield Button("F0", id="fn-0", classes="function-button")
-                        yield Button("F1", id="fn-1", classes="function-button")
-                        yield Button("F2", id="fn-2", classes="function-button")
-                        yield Button("F3", id="fn-3", classes="function-button")
+                        yield Button(
+                            "F0", id="fn-0", classes="function-button"
+                        )
+                        yield Button(
+                            "F1", id="fn-1", classes="function-button"
+                        )
+                        yield Button(
+                            "F2", id="fn-2", classes="function-button"
+                        )
+                        yield Button(
+                            "F3", id="fn-3", classes="function-button"
+                        )
 
                     with Horizontal(classes="function-row"):
-                        yield Button("F4", id="fn-4", classes="function-button")
-                        yield Button("F5", id="fn-5", classes="function-button")
-                        yield Button("F6", id="fn-6", classes="function-button")
-                        yield Button("F7", id="fn-7", classes="function-button")
+                        yield Button(
+                            "F4", id="fn-4", classes="function-button"
+                        )
+                        yield Button(
+                            "F5", id="fn-5", classes="function-button"
+                        )
+                        yield Button(
+                            "F6", id="fn-6", classes="function-button"
+                        )
+                        yield Button(
+                            "F7", id="fn-7", classes="function-button"
+                        )
 
                     with Horizontal(classes="function-row"):
-                        yield Button("F8", id="fn-8", classes="function-button")
-                        yield Button("F9", id="fn-9", classes="function-button")
-                        yield Button("F10", id="fn-10", classes="function-button")
-                        yield Button("F11", id="fn-11", classes="function-button")
+                        yield Button(
+                            "F8", id="fn-8", classes="function-button"
+                        )
+                        yield Button(
+                            "F9", id="fn-9", classes="function-button"
+                        )
+                        yield Button(
+                            "F10", id="fn-10", classes="function-button"
+                        )
+                        yield Button(
+                            "F11", id="fn-11", classes="function-button"
+                        )
 
                     # Extended function buttons F12-F31 (now always visible)
                     with Horizontal(classes="function-row"):
-                        yield Button("F12", id="fn-12", classes="function-button")
-                        yield Button("F13", id="fn-13", classes="function-button")
-                        yield Button("F14", id="fn-14", classes="function-button")
-                        yield Button("F15", id="fn-15", classes="function-button")
+                        yield Button(
+                            "F12", id="fn-12", classes="function-button"
+                        )
+                        yield Button(
+                            "F13", id="fn-13", classes="function-button"
+                        )
+                        yield Button(
+                            "F14", id="fn-14", classes="function-button"
+                        )
+                        yield Button(
+                            "F15", id="fn-15", classes="function-button"
+                        )
 
                     with Horizontal(classes="function-row"):
-                        yield Button("F16", id="fn-16", classes="function-button")
-                        yield Button("F17", id="fn-17", classes="function-button")
-                        yield Button("F18", id="fn-18", classes="function-button")
-                        yield Button("F19", id="fn-19", classes="function-button")
+                        yield Button(
+                            "F16", id="fn-16", classes="function-button"
+                        )
+                        yield Button(
+                            "F17", id="fn-17", classes="function-button"
+                        )
+                        yield Button(
+                            "F18", id="fn-18", classes="function-button"
+                        )
+                        yield Button(
+                            "F19", id="fn-19", classes="function-button"
+                        )
 
                     with Horizontal(classes="function-row"):
-                        yield Button("F20", id="fn-20", classes="function-button")
-                        yield Button("F21", id="fn-21", classes="function-button")
-                        yield Button("F22", id="fn-22", classes="function-button")
-                        yield Button("F23", id="fn-23", classes="function-button")
+                        yield Button(
+                            "F20", id="fn-20", classes="function-button"
+                        )
+                        yield Button(
+                            "F21", id="fn-21", classes="function-button"
+                        )
+                        yield Button(
+                            "F22", id="fn-22", classes="function-button"
+                        )
+                        yield Button(
+                            "F23", id="fn-23", classes="function-button"
+                        )
 
                     with Horizontal(classes="function-row"):
-                        yield Button("F24", id="fn-24", classes="function-button")
-                        yield Button("F25", id="fn-25", classes="function-button")
-                        yield Button("F26", id="fn-26", classes="function-button")
-                        yield Button("F27", id="fn-27", classes="function-button")
+                        yield Button(
+                            "F24", id="fn-24", classes="function-button"
+                        )
+                        yield Button(
+                            "F25", id="fn-25", classes="function-button"
+                        )
+                        yield Button(
+                            "F26", id="fn-26", classes="function-button"
+                        )
+                        yield Button(
+                            "F27", id="fn-27", classes="function-button"
+                        )
 
                     with Horizontal(classes="function-row"):
-                        yield Button("F28", id="fn-28", classes="function-button")
-                        yield Button("F29", id="fn-29", classes="function-button")
-                        yield Button("F30", id="fn-30", classes="function-button")
-                        yield Button("F31", id="fn-31", classes="function-button")
+                        yield Button(
+                            "F28", id="fn-28", classes="function-button"
+                        )
+                        yield Button(
+                            "F29", id="fn-29", classes="function-button"
+                        )
+                        yield Button(
+                            "F30", id="fn-30", classes="function-button"
+                        )
+                        yield Button(
+                            "F31", id="fn-31", classes="function-button"
+                        )
 
             # Debug console
             with Container(id="debug-panel"):
@@ -243,7 +351,7 @@ class DCCEXThrottleApp(App):
                 with Horizontal():
                     yield Input(
                         placeholder="Enter direct command (without < >)",
-                        id="direct-input"
+                        id="direct-input",
                     )
                     yield Button("Send", id="send-btn", variant="primary")
 
@@ -255,12 +363,14 @@ class DCCEXThrottleApp(App):
         self.sub_title = f"Disconnected | {self.state.host}:{self.state.port}"
 
         # Auto-connect if configured
-        if self.config.get('connection', 'auto_connect', False):
+        if self.config.get("connection", "auto_connect", False):
             await self.action_connect()
 
         # Log startup
         await self.log_message("S", "DCC-EX Throttle TUI started")
-        await self.log_message("S", f"Configured host: {self.state.host}:{self.state.port}")
+        await self.log_message(
+            "S", f"Configured host: {self.state.host}:{self.state.port}"
+        )
 
     async def on_button_pressed(self, event: Button.Pressed) -> None:
         """Handle button press events."""
@@ -312,16 +422,18 @@ class DCCEXThrottleApp(App):
             await self.log_message("S", "Already connected")
             return
 
-        await self.log_message("S", f"Connecting to {self.state.host}:{self.state.port}...")
+        await self.log_message(
+            "S", f"Connecting to {self.state.host}:{self.state.port}..."
+        )
 
         # Create protocol
         self.protocol = DCCEXProtocol(
             host=self.state.host,
             port=self.state.port,
-            timeout=self.config.get('connection', 'timeout', 10),
+            timeout=self.config.get("connection", "timeout", 10),
             on_response=self.handle_response,
             on_disconnect=self.handle_disconnect,
-            on_broadcast=self.handle_broadcast
+            on_broadcast=self.handle_broadcast,
         )
 
         # Connect
@@ -385,15 +497,22 @@ class DCCEXThrottleApp(App):
             functions = data.get("functions")
 
             # Only update if this is our currently acquired loco
-            if (self.acquired and self.state.current_loco and
-                    self.state.current_loco.address == loco_addr and
-                    speed is not None and direction is not None):
+            if (
+                self.acquired
+                and self.state.current_loco
+                and self.state.current_loco.address == loco_addr
+                and speed is not None
+                and direction is not None
+            ):
 
                 # Ignore broadcasts that arrive too soon after our own command
                 # This prevents race conditions where the CS echoes old state
                 time_since_command = time.time() - self.last_command_time
                 if time_since_command < 0.15:  # 150ms grace period
-                    await self.log_message("S", f"Ignoring broadcast (too soon after command: {time_since_command:.3f}s)")
+                    await self.log_message(
+                        "S",
+                        f"Ignoring broadcast (too soon after command: {time_since_command:.3f}s)",
+                    )
                     return
 
                 # Update local state
@@ -425,16 +544,23 @@ class DCCEXThrottleApp(App):
                 if functions is not None:
                     for fn_num in range(32):
                         fn_state = (functions >> fn_num) & 0x1
-                        self.state.current_loco.set_function(fn_num, fn_state == 1)
+                        self.state.current_loco.set_function(
+                            fn_num, fn_state == 1
+                        )
 
                         # Update button appearance
                         try:
                             button = self.query_one(f"#fn-{fn_num}", Button)
-                            button.variant = "success" if fn_state == 1 else "default"
+                            button.variant = (
+                                "success" if fn_state == 1 else "default"
+                            )
                         except Exception:
                             pass  # Button might not be visible
 
-                await self.log_message("S", f"Updated loco {loco_addr} from broadcast (Speed: {speed}, Dir: {'FWD' if direction == Direction.FORWARD else 'REV'})")
+                await self.log_message(
+                    "S",
+                    f"Updated loco {loco_addr} from broadcast (Speed: {speed}, Dir: {'FWD' if direction == Direction.FORWARD else 'REV'})",
+                )
 
         elif cmd_type == "power_state":
             # Power state update
@@ -516,7 +642,9 @@ class DCCEXThrottleApp(App):
                 self.state.current_loco.address, 0, self.current_direction
             )
 
-        address = self.state.current_loco.address if self.state.current_loco else 0
+        address = (
+            self.state.current_loco.address if self.state.current_loco else 0
+        )
         self.state.release_loco()
         self.acquired = False
         self.current_speed = 0
@@ -540,7 +668,7 @@ class DCCEXThrottleApp(App):
             await self.protocol.send_throttle(
                 self.state.current_loco.address,
                 new_speed,
-                self.current_direction
+                self.current_direction,
             )
 
     async def action_speed_down(self) -> None:
@@ -558,7 +686,7 @@ class DCCEXThrottleApp(App):
             await self.protocol.send_throttle(
                 self.state.current_loco.address,
                 new_speed,
-                self.current_direction
+                self.current_direction,
             )
 
     async def set_direction(self, direction: Direction) -> None:
@@ -586,9 +714,7 @@ class DCCEXThrottleApp(App):
         if self.protocol:
             self.last_command_time = time.time()
             await self.protocol.send_throttle(
-                self.state.current_loco.address,
-                self.current_speed,
-                direction
+                self.state.current_loco.address, self.current_speed, direction
             )
 
     async def action_direction_forward(self) -> None:
@@ -611,9 +737,7 @@ class DCCEXThrottleApp(App):
         if self.protocol:
             self.last_command_time = time.time()
             await self.protocol.send_throttle(
-                self.state.current_loco.address,
-                0,
-                self.current_direction
+                self.state.current_loco.address, 0, self.current_direction
             )
 
     async def action_emergency_stop(self) -> None:
@@ -643,9 +767,7 @@ class DCCEXThrottleApp(App):
         if self.protocol:
             self.last_command_time = time.time()
             await self.protocol.send_function(
-                self.state.current_loco.address,
-                fn_num,
-                new_state
+                self.state.current_loco.address, fn_num, new_state
             )
 
     async def action_toggle_power(self) -> None:
@@ -724,17 +846,20 @@ class DCCEXThrottleApp(App):
         """Update loco address display in connection panel."""
         loco_addr_display = self.query_one("#loco-address-display", Static)
         if self.state.current_loco:
-            loco_addr_display.update(f"Loco Address: {self.state.current_loco.address}")
+            loco_addr_display.update(
+                f"Loco Address: {self.state.current_loco.address}"
+            )
         else:
             loco_addr_display.update("Loco Address: N/A")
 
     def update_speed_display(self) -> None:
         """Update speed display."""
-        dir_str = "FWD" if self.current_direction == Direction.FORWARD else "REV"
+        dir_str = (
+            "FWD" if self.current_direction == Direction.FORWARD else "REV"
+        )
         speed_display = self.query_one("#speed-display", Static)
         speed_display.update(
-            f"Speed: {self.current_speed}\n"
-            f"Direction: {dir_str}"
+            f"Speed: {self.current_speed}\n" f"Direction: {dir_str}"
         )
 
     async def log_message(self, direction: str, message: str) -> None:
@@ -743,9 +868,9 @@ class DCCEXThrottleApp(App):
         timestamp = get_timestamp()
 
         if direction == "S":
-            formatted = f"[cyan]{timestamp} [S] <{message}>[/cyan]"
+            formatted = f"{timestamp} [S] <{message}>"
         elif direction == "R":
-            formatted = f"[green]{timestamp} [R] {message}[/green]"
+            formatted = f"{timestamp} [R] {message}"
         else:
             formatted = f"{timestamp} {message}"
 

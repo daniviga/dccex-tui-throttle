@@ -1,6 +1,7 @@
 """
 Configuration management for DCC-EX Throttle TUI application.
 """
+
 import sys
 from pathlib import Path
 from typing import Any, Dict, Optional
@@ -10,34 +11,35 @@ if sys.version_info >= (3, 11):
     import tomllib
 
     def load_toml(path: Path) -> Dict[str, Any]:
-        with open(path, 'rb') as f:
+        with open(path, "rb") as f:
             return tomllib.load(f)
+
 else:
     import tomli
 
     def load_toml(path: Path) -> Dict[str, Any]:
-        with open(path, 'rb') as f:
+        with open(path, "rb") as f:
             return tomli.load(f)
 
 
 DEFAULT_CONFIG = {
-    'connection': {
-        'host': 'localhost',
-        'port': 2560,
-        'auto_connect': False,
-        'reconnect_delay': 5,
-        'timeout': 10,
+    "connection": {
+        "host": "localhost",
+        "port": 2560,
+        "auto_connect": False,
+        "reconnect_delay": 5,
+        "timeout": 10,
     },
-    'ui': {
-        'theme': 'dark',
-        'show_debug_console': True,
-        'max_log_lines': 100,
+    "ui": {
+        "theme": "dark",
+        "show_debug_console": True,
+        "max_log_lines": 100,
     },
-    'throttle': {
-        'default_loco_address': 3,
-        'speed_step': 1,
-        'max_speed': 126,
-    }
+    "throttle": {
+        "default_loco_address": 3,
+        "speed_step": 1,
+        "max_speed": 126,
+    },
 }
 
 
@@ -62,9 +64,9 @@ class Config:
         """Get default configuration file path."""
         # Try to use user's home directory
         home = Path.home()
-        config_dir = home / '.config' / 'dccex_throttle'
+        config_dir = home / ".config" / "dccex_throttle"
         config_dir.mkdir(parents=True, exist_ok=True)
-        return config_dir / 'config.toml'
+        return config_dir / "config.toml"
 
     def load(self):
         """Load configuration from TOML file."""
@@ -93,7 +95,7 @@ class Config:
             self.config_path.parent.mkdir(parents=True, exist_ok=True)
 
             # Write TOML file manually (tomli is read-only)
-            with open(self.config_path, 'w') as f:
+            with open(self.config_path, "w") as f:
                 self._write_toml(f, self.config)
         except Exception as e:
             print(f"Error saving config to {self.config_path}: {e}")
@@ -106,10 +108,10 @@ class Config:
                 if isinstance(value, str):
                     f.write(f'{key} = "{value}"\n')
                 elif isinstance(value, bool):
-                    f.write(f'{key} = {str(value).lower()}\n')
+                    f.write(f"{key} = {str(value).lower()}\n")
                 else:
-                    f.write(f'{key} = {value}\n')
-            f.write('\n')
+                    f.write(f"{key} = {value}\n")
+            f.write("\n")
 
     def get(self, section: str, key: str, default: Any = None) -> Any:
         """Get configuration value."""
@@ -123,19 +125,19 @@ class Config:
 
     def get_connection_config(self) -> Dict[str, Any]:
         """Get connection configuration."""
-        return self.config.get('connection', {})
+        return self.config.get("connection", {})
 
     def get_ui_config(self) -> Dict[str, Any]:
         """Get UI configuration."""
-        return self.config.get('ui', {})
+        return self.config.get("ui", {})
 
     def get_throttle_config(self) -> Dict[str, Any]:
         """Get throttle configuration."""
-        return self.config.get('throttle', {})
+        return self.config.get("throttle", {})
 
     def update_from_args(self, args):
         """Update configuration from command-line arguments."""
-        if hasattr(args, 'host') and args.host:
-            self.set('connection', 'host', args.host)
-        if hasattr(args, 'port') and args.port:
-            self.set('connection', 'port', args.port)
+        if hasattr(args, "host") and args.host:
+            self.set("connection", "host", args.host)
+        if hasattr(args, "port") and args.port:
+            self.set("connection", "port", args.port)

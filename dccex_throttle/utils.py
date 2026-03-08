@@ -1,6 +1,7 @@
 """
 Utility functions for DCC-EX Throttle TUI application.
 """
+
 import logging
 from datetime import datetime
 from typing import Optional
@@ -12,16 +13,10 @@ def setup_logging(log_file: Optional[str] = None, level: int = logging.INFO):
 
     if log_file:
         logging.basicConfig(
-            level=level,
-            format=log_format,
-            filename=log_file,
-            filemode='a'
+            level=level, format=log_format, filename=log_file, filemode="a"
         )
     else:
-        logging.basicConfig(
-            level=level,
-            format=log_format
-        )
+        logging.basicConfig(level=level, format=log_format)
 
 
 def get_timestamp() -> str:
@@ -90,7 +85,7 @@ def parse_response(response: str) -> tuple[str, list[str]]:
     """
     # Remove < and > brackets
     response = response.strip()
-    if response.startswith('<') and response.endswith('>'):
+    if response.startswith("<") and response.endswith(">"):
         response = response[1:-1]
 
     # Split into parts
@@ -119,9 +114,9 @@ def format_command(cmd: str) -> str:
         return ""
 
     # Remove existing brackets
-    if cmd.startswith('<'):
+    if cmd.startswith("<"):
         cmd = cmd[1:]
-    if cmd.endswith('>'):
+    if cmd.endswith(">"):
         cmd = cmd[:-1]
 
     # Add brackets

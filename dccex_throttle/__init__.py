@@ -15,10 +15,10 @@ from .protocol import DCCEXProtocol
 from .ui import DCCEXThrottleApp
 
 __all__ = [
-    'Config',
-    'Locomotive',
-    'ThrottleState',
-    'Direction',
-    'DCCEXProtocol',
-    'DCCEXThrottleApp',
+    "Config",
+    "Locomotive",
+    "ThrottleState",
+    "Direction",
+    "DCCEXProtocol",
+    "DCCEXThrottleApp",
 ]
