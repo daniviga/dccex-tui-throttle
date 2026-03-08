@@ -1,0 +1,23 @@
+# DCC-EX Throttle TUI Configuration File
+# Copy this file to ~/.config/dccex_throttle/config.toml and customize
+
+[connection]
+# DCC-EX Command Station connection settings
+host = "localhost"
+port = 2560
+auto_connect = false
+reconnect_delay = 5
+timeout = 10
+
+[ui]
+# User interface settings
+theme = "dark"
+show_debug_console = true
+max_log_lines = 100
+show_extended_functions = false
+
+[throttle]
+# Throttle control settings
+default_loco_address = 3
+speed_step = 1
+max_speed = 126
