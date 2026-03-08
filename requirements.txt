@@ -3,3 +3,8 @@
 
 textual>=0.47.0       # Modern TUI framework
 tomli>=2.0.1          # TOML parsing for Python <3.11
+
+# Testing dependencies (optional)
+pytest>=7.4.0         # Test framework
+pytest-asyncio>=0.21.0  # Async test support
+pytest-cov>=4.1.0     # Coverage reporting

@@ -40,20 +40,51 @@ python -m dccex_throttle --config /path/to/config.toml
 
 ### Testing
 ```bash
-# TODO: Tests not yet implemented
-# When implemented, run with:
-# python -m pytest tests/
-# python -m pytest tests/test_specific.py  # Single test file
-# python -m pytest tests/test_specific.py::test_function  # Single test
+# Install test dependencies
+pip install -r requirements.txt
+
+# Run all tests
+python -m pytest
+
+# Run tests with coverage
+python -m pytest --cov=dccex_throttle --cov-report=html
+
+# Run specific test file
+python -m pytest tests/test_models.py
+
+# Run specific test function
+python -m pytest tests/test_models.py::TestLocomotive::test_set_speed
+
+# Run tests matching pattern
+python -m pytest -k "test_speed"
+
+# Run async tests only
+python -m pytest -m asyncio
+
+# Verbose output
+python -m pytest -v
+
+# Show local variables on failure
+python -m pytest -l
+
+# Stop on first failure
+python -m pytest -x
 ```
 
 ### Linting & Formatting
 ```bash
-# No formal linting configured yet
-# When adding, recommend:
-# ruff check .
-# ruff format .
-# mypy dccex_throttle/
+# Format code with Black (recommended)
+black dccex_throttle/
+
+# Check PEP 8 compliance with flake8
+flake8 dccex_throttle/ --max-line-length=79
+
+# Or use ruff (faster alternative)
+ruff check .
+ruff format .
+
+# Type checking with mypy
+mypy dccex_throttle/
 ```
 
 ## Code Architecture
@@ -80,7 +111,15 @@ dccex_throttle/
 ## Code Style Guidelines
 
 ### General Python Style
-- **PEP 8 compliance**: 79 characters per line (as stated in README contributing section)
+- **PEP 8 Standards**: Follow PEP 8 style guide strictly
+  - 79 characters per line maximum
+  - 4 spaces for indentation (no tabs)
+  - Two blank lines between top-level functions/classes
+  - One blank line between methods
+- **Black Formatting**: Code should be formatted with Black (or Black-compatible)
+  - Use double quotes for strings
+  - Trailing commas in multi-line structures
+  - Consistent spacing around operators
 - **Type hints**: Use type hints for function signatures
 - **Docstrings**: Use docstrings for all functions, classes, and modules
 - **Python version**: Target 3.11+, but maintain 3.9+ compatibility
@@ -228,13 +267,36 @@ Config file location: `~/.config/dccex_throttle/config.toml`
 
 ## Testing Guidelines
 
-**When adding tests:**
+**Test Structure:**
+- All tests in `tests/` directory
+- Test files named `test_*.py`
+- Use pytest framework with pytest-asyncio for async tests
+- Mock DCC-EX server available in `tests/mock_server.py`
+
+**Running Tests:**
+- `python -m pytest` - Run all tests
+- `python -m pytest tests/test_models.py` - Run single test file
+- `python -m pytest -k "test_speed"` - Run tests matching pattern
+- `python -m pytest --cov` - Run with coverage report
+
+**Writing Tests:**
 - Place tests in `tests/` directory
 - Name test files `test_*.py`
-- Use pytest framework
+- Use `@pytest.mark.asyncio` for async tests
+- Use `mock_server` fixture for protocol testing
 - Test both sync and async code
 - Mock DCC-EX Command Station responses
 - Test edge cases (invalid addresses, disconnections, etc.)
+
+**Mock DCC-EX Server:**
+```python
+@pytest.mark.asyncio
+async def test_example(mock_server):
+    protocol = DCCEXProtocol(host=mock_server.host, port=mock_server.port)
+    await protocol.connect()
+    await protocol.send_power_on()
+    # Assert behavior
+```
 
 ## Common Tasks
 
@@ -280,9 +342,11 @@ Refactor protocol parsing for clarity
 
 ## Notes for Agents
 
+- **Code Style**: Strictly follow PEP 8 and Black formatting guidelines
 - **License**: GPLv3 - ensure all new code is GPL-compatible
 - **Python compatibility**: Maintain 3.9+ support (use tomli for TOML parsing on <3.11)
 - **Dependencies**: Minimize external dependencies; prefer stdlib when possible
 - **Performance**: Use async/await for all I/O; avoid blocking operations
 - **UI responsiveness**: Keep UI operations fast; use background tasks for network calls
 - **Multi-throttle support**: Always consider broadcast message handling when modifying loco state
+- **Line length**: Never exceed 79 characters per line (PEP 8 compliance required)

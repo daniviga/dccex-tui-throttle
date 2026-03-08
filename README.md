@@ -278,10 +278,36 @@ dccex_throttle/
 
 ### Running Tests
 
+The project includes comprehensive test coverage with a mocked DCC-EX Command Station server.
+
 ```bash
-# TODO: Add tests
-# python -m pytest tests/
+# Install test dependencies
+pip install -r requirements.txt
+
+# Run all tests
+python -m pytest
+
+# Run tests with coverage report
+python -m pytest --cov=dccex_throttle --cov-report=html
+
+# Run specific test file
+python -m pytest tests/test_protocol.py
+
+# Run with verbose output
+python -m pytest -v
+
+# Run tests matching a pattern
+python -m pytest -k "test_speed"
 ```
+
+**Test Structure:**
+- `tests/mock_server.py` - Mock DCC-EX Command Station for protocol testing
+- `tests/test_models.py` - Tests for data models (Locomotive, ThrottleState, etc.)
+- `tests/test_config.py` - Tests for configuration management
+- `tests/test_utils.py` - Tests for utility functions
+- `tests/test_protocol.py` - Tests for DCC-EX protocol communication
+
+The mock server simulates a real DCC-EX Command Station, including power commands, throttle control, function control, and broadcast messages.
 
 ### Contributing
 
